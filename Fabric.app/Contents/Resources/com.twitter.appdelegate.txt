@@ -1,0 +1,14 @@
+#import "AppDelegate.h"
+#######
+#import <Fabric/Fabric.h>
+#import <TwitterKit/TwitterKit.h>
+#######
+
+@implementation AppDelegate
+            
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+#start#
+    return YES;
+}
+
+@end

@@ -1,0 +1,31 @@
+#import "<Your>InterstitialViewController.h"
+
+@implementation <Your>InterstitialViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    ...
+
+#######
+    // fetch an interstitial ad.
+    // TODO: Replace this test id with your personal ad unit id
+    self.interstitial = [MPInterstitialAdController interstitialAdControllerForAdUnitId:@"77ce0b65cf81438eb255695afe3b1904"];
+    self.interstitial.delegate = self;
+
+    [self.interstitial loadAd];
+#######
+}
+
+#######
+#pragma mark - <MPInterstitialAdControllerDelegate>
+// Present the ad only after it has loaded and is ready
+- (void)interstitialDidLoadAd:(MPInterstitialAdController *)interstitial {
+    if (interstitial.ready) {
+        [interstitial showFromViewController:self];
+    }
+}
+#######
+
+...
+@end

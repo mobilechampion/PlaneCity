@@ -1,0 +1,19 @@
+#import "<Your>LoginViewController.h"
+#######
+#import <DigitsKit/DigitsKit.h>
+#######
+
+@implementation <Your>LoginViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+#######
+    DGTAuthenticateButton *authenticateButton = [DGTAuthenticateButton buttonWithAuthenticationCompletion:^(DGTSession *session, NSError *error) {
+        // play with Digits session
+    }];
+    authenticateButton.center = self.view.center;
+    [self.view addSubview:authenticateButton];
+#######
+}
+
+@end

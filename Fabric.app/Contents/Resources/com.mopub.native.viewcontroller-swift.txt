@@ -1,0 +1,83 @@
+import UIKit
+#######
+import MoPub
+#######
+
+class <Your>MasterViewController: UIViewController {
+
+#######
+    var placer: MPTableViewAdPlacer!
+#######
+    ...
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        ...
+#######
+        self.setupAdPlacer()
+        for i in 1...10 {
+            self.insertNewObject(self)
+        }
+#######
+    }
+
+#######
+    func setupAdPlacer() {
+        // This is a sample ad unit ID configured to place ads at cell positions 2, 10, and every
+        // 10th position afterwards. You should replace this with your own ad unit ID from the
+        // MoPub website.
+        let sampleAdUnitID = "76a3fefaced247959582d2d2df6f4757"
+        
+        var targeting: MPNativeAdRequestTargeting! = MPNativeAdRequestTargeting()
+        targeting.desiredAssets = NSSet(objects: kAdIconImageKey, kAdMainImageKey, kAdCTATextKey, kAdTextKey, kAdTitleKey)
+
+        // Creates a table view ad placer that uses a sample cell for its layout.
+        // Replace the defaultAdRenderingClass with your own subclass that implements MPAdRendering.
+        self.placer = MPTableViewAdPlacer(tableView: self.tableView, viewController: self, defaultAdRenderingClass: MPNativeAdSampleTableViewCell.self)
+        self.placer.loadAdsForAdUnitID(sampleAdUnitID, targeting: targeting)
+    }
+#######
+
+    func insertNewObject(sender: AnyObject) {
+        ...
+#strikethrough#        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)#strikethrough#
+#######
+        // Replace insertRowsAtIndexPaths:withRowAnimation: with its MoPub equivalent.
+        //
+        // IMPORTANT: Depending on your use of UITableView, you will need to replace other API calls in
+        // addition to this one. See http://t.co/mopub-ios-native-category for a list of required
+        // method replacements.
+        //
+        self.tableView.mp_insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+#######
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showDetail" {
+#strikethrough#            if let indexPath = self.tableView.indexPathForSelectedRow() {#strikethrough#
+#######
+            if let indexPath = self.tableView.mp_indexPathForSelectedRow() {
+#######
+                ...
+            }
+        }
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+#strikethrough#        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell#strikethrough#
+#######
+        let cell = tableView.mp_dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+#######
+        ...
+    }
+
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            objects.removeObjectAtIndex(indexPath.row)
+#strikethrough#            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)#strikethrough#
+#######
+            tableView.mp_deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+#######
+        }
+    }
+}

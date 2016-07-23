@@ -1,0 +1,19 @@
+#import "<Your>LoginViewController.h"
+#######
+#import <TwitterKit/TwitterKit.h>
+#######
+
+@implementation <Your>LoginViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+#######
+    TWTRLogInButton *logInButton = [TWTRLogInButton buttonWithLogInCompletion:^(TWTRSession *session, NSError *error) {
+        // play with Twitter session
+    }];
+    logInButton.center = self.view.center;
+    [self.view addSubview:logInButton];
+#######
+}
+
+@end

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "public.h"
 
 @interface ViewController ()
 
@@ -16,6 +17,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+//    UIImageView *backView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PHONE_WIDTH, PHONE_HEIGHT)];
+//    backView.image = [UIImage imageNamed:@"back.png"];
+//    
+//    [self.view addSubview:backView];
     // Do any additional setup after loading the view, typically from a nib.
 }
 

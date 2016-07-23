@@ -1,0 +1,97 @@
+#import "<Your>MasterViewController.h"
+#######
+#import <MoPub/MoPub.h>
+#import <CoreLocation/CoreLocation.h>
+#######
+
+@interface <Your>MasterViewController ()
+
+...
+#######
+@property (nonatomic, strong) MPTableViewAdPlacer *placer;
+#######
+
+@end
+
+@implementation <Your>MasterViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    ...
+#######
+    [self setupAdPlacer];
+    // Example: data must be pre-populated into table for ad to appear
+    for (int i = 0; i < 10; i++) {
+        [self insertNewObject:self];
+    }
+#######
+}
+
+- (void)dealloc {
+#######
+    [_placer release];  // only if not using ARC
+#######
+    [super dealloc];
+}
+
+#######
+- (void)setupAdPlacer {
+    // Create a targeting object to serve better ads.
+    MPNativeAdRequestTargeting *targeting = [MPNativeAdRequestTargeting targeting];
+    targeting.location = [[CLLocation alloc] initWithLatitude:37.7793 longitude:-122.4175];
+    targeting.desiredAssets = [NSSet setWithObjects:kAdIconImageKey, kAdMainImageKey, kAdCTATextKey, kAdTextKey, kAdTitleKey, nil];
+
+    // Create a table view ad placer.
+    self.placer = [MPTableViewAdPlacer placerWithTableView:self.tableView viewController:self defaultAdRenderingClass:[MPNativeAdSampleTableViewCell class]];
+    
+    // Load ads.
+    // We have configured the test ad unit ID to place ads at fixed cell positions 2 and 10 and show an ad every 10 cells after that.
+    // You can configure your own ad unit through the MoPub UI.
+    [self.placer loadAdsForAdUnitID:@"61df5985160c4e1d8f81571c1db5c0c1" targeting:targeting];
+}
+#######
+
+- (void)insertNewObject:(id)sender {
+    ...
+#strikethrough#    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];#strikethrough#
+#######
+    // Replace insertRowsAtIndexPaths:withRowAnimation: with its MoPub equivalent.
+    //
+    // IMPORTANT: Depending on your use of UITableView, you will need to replace other API calls in
+    // addition to this one. See http://t.co/mopub-ios-native-category for a list of required
+    // method replacements.
+    //
+    [self.tableView mp_insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+#######
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+#strikethrough#        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];#strikethrough#
+#######
+        NSIndexPath *indexPath = [self.tableView mp_indexPathForSelectedRow];
+#######
+        ...
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+#strikethrough#    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];#strikethrough#
+#######
+    UITableViewCell *cell = [tableView mp_dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+#######
+    ...
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.objects removeObjectAtIndex:indexPath.row];
+#strikethrough#        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];#strikethrough#
+#######
+        [tableView mp_deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+#######
+    }
+    ...
+}
+
+@end

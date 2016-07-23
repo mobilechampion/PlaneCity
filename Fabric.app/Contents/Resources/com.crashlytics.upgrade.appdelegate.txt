@@ -1,0 +1,15 @@
+#import "AppDelegate.h"
+#strikethrough##import <Crashlytics/Crashlytics.h>#strikethrough#
+#######
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+#######
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+#start#
+    return YES;
+}
+
+@end

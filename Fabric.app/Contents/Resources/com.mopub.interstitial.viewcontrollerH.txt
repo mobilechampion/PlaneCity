@@ -1,0 +1,14 @@
+#######
+#import <MoPub/MPInterstitialAdController.h>
+#######
+
+@interface <Your>InterstitialViewController : UIViewController 
+#######
+ <MPInterstitialAdControllerDelegate>
+#######
+
+#######
+@property (nonatomic, retain) MPInterstitialAdController *interstitial;
+#######
+
+@end

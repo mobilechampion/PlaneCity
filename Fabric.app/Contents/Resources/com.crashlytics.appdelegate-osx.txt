@@ -1,0 +1,13 @@
+#import "AppDelegate.h"
+#######
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+#######
+
+@implementation AppDelegate
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+#start#
+}
+
+@end

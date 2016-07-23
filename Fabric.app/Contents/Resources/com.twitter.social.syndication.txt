@@ -1,0 +1,20 @@
+#import "<Your>TweetViewController.h"
+#######
+#import <TwitterKit/TwitterKit.h>
+#######
+
+@implementation <Your>TweetViewController
+            
+- (void)viewDidLoad {
+    [super viewDidLoad];
+#######
+    [[Twitter sharedInstance] logInGuestWithCompletion:^(TWTRGuestSession *guestSession, NSError *error) {
+        [[[Twitter sharedInstance] APIClient] loadTweetWithID:@"20" completion:^(TWTRTweet *tweet, NSError *error) {
+            TWTRTweetView *tweetView = [[TWTRTweetView alloc] initWithTweet:tweet style:TWTRTweetViewStyleRegular];
+            [self.view addSubview:tweetView];
+        }];
+    }];
+#######
+}
+
+@end

@@ -1,0 +1,15 @@
+import Cocoa
+#strikethrough#import Crashlytics#strikethrough#
+#######
+import Fabric
+import Crashlytics
+#######
+
+@NSApplicationMain
+class AppDelegate: NSObject, NSApplicationDelegate {
+
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
+#start#
+    }
+
+}

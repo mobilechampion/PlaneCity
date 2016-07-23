@@ -1,0 +1,34 @@
+import UIKit
+#######
+import MoPub
+#######
+
+class <Your>InterstitialViewController: UIViewController
+#######
+, MPInterstitialAdControllerDelegate
+#######
+{
+
+#######
+    // TODO: Replace this test id with your personal ad unit id
+    var interstitial: MPInterstitialAdController = MPInterstitialAdController(forAdUnitId: "77ce0b65cf81438eb255695afe3b1904")
+#######
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+#######
+        self.interstitial.delegate = self
+        self.interstitial.loadAd()
+#######
+    }
+
+#######
+    // Present the ad only after it has loaded and is ready
+    func interstitialDidLoadAd(interstitial: MPInterstitialAdController) {
+        if (interstitial.ready) {
+            interstitial.showFromViewController(self)
+        }
+    }
+#######
+}
